@@ -32,21 +32,69 @@
                 <div id="graph1"></div>
             </div>
 
+            <div class="center row">
+                <div class="col-lg-6">
+                    <h4>Top 10 Countries by Winning Percentage*</h4>
+                </div>
+                <div class="col-lg-6">
+                    <h4>Top Performing Countries in World Cup^</h4>
+                </div>
+            </div>
 
-            <div class="center">
+
+            <div class="row center">
                 <div class="col-lg-6">
                     <div id="graph2"></div>
+                    <p style="font-size:10px; margin:0px 100px">
+                        *Including only international games played since 1970. Including only teams in top quartile of number of games played since 1970.
+                    </p>
                 </div>
 
 
                 <div class="col-lg-6">
                     <div id="graph3"></div>
+                    <p class="note" style="font-size:10px; margin:0px 100px">
+                        ^Results from 2014 and 2018 FIFA World Cup. Including only teams with at least 1 win. Ranking calculated based on normalized number of wins and normalized goal difference, weighted equally.
+                    </p>
                 </div>
+            </div>
+
+            <hr />
+            <div style="margin:0px 100px">
+                <h3 class="center">Written Questions</h3>
+
+                <ol>
+                    <li> My first graph is a bar chart that shows the number of international football games by year. The number of games is shown as text above the bars. The bars are colored from maroon, for the year with the most number of games, to yellow, for the year with the least number of games. By toggling the slider above the chart, the user can view the number of games in each year for any period between 1872 and 2020 inclusive.</br></br>
+
+                    My second graph is a map that shows top 10 winning nations and their winning percentages. I define the top winning nations as those with the highest winning percentage in the games played since 1970, chosen amongst the teams in the top quartile in terms of the number of games played since 1970. I filter for games since 1970 as doing so allows me to (a) look at more recent results that are more relevant (b) exclude most older countries that no longer exist in the modern state system. I consider only teams that are amongst the top quartile in terms of the number of games played, as it is easier for teams that play very few games to have a higher winning percentage, and including these teams would make the winning percentage an unfair metric. The countries in the map are colored from maroon, for the top winning country, to yellow, for the 10th top winning country. By hovering over the countries in the map, the user can see a tooltip that shows the name of the country, its rank, and its winning percentage.
+
+                    </br></br>
+
+                    My third graph is a scatter plot that shows the top performing countries in the last 2 World Cups. I look at two metrics to determine the top performing teams: number of wins and overall goal difference. The number of wins is a good measure of performance in the World Cup, as each team can have only a maximum of 3 wins during the group stages (out of 3 games) in each World Cup. Any additional wins mean that the team advances to a later stage (Round of 16, Quarter-Finals, Semi-Finals, Finals), and is therefore a stronger team. The goal difference is also a good measure of how each team compares with every other team it has played. I normalize both the number of wins and goal difference between 0 and 1 using min-max normalization and sum the values up to get a score that I use to rank the countries. The graph plots a point for each country based on these two metrics. The points are colored from maroon, for the top performing country, to yellow, for the worst performing country. By hovering over the points, the user can see a tooltip that shows the name of the country, its rank, its number of wins, and its goal difference.
+
+                </li> </br>
+
+                <li> D3 allows me to create interactive visualizations that change based on user inputs, which are more engaging and effective. D3 has many tools to help me easily create different types of visualizations. D3 allows visualizations to be updated dynamically when the data is updated.
+                </li><br />
+                <li> D3 might not be the easiest tool to use to create static visualizations e.g. for print media. D3 requires a web server to host the page and load the visualizations, which might make it less accessible compared to an image file. It is difficult to clean and process data using JavaScript as compared to Python which has powerful libraries like pandas.
+                </li> <br />
+
+                <li> I chose the colors of my dashboard with accessibility for the colorblind in mind, and tested the colors using coolors.co to make sure that they are distinguishable for people with different types of colorblindness. I also ensured that there are gaps between the bars in the bar plot, whitespaces along the borders of the countries in the map, and a grey outline around the data points in the scatter plot, so that those with colorblindness can distinguish between different data points more easily. I included titles and axis labels for all my graphs, and labelled the data in the bar plot with text, making these accessible to the visually impaired through assistive technology. </br>
+
+                However, the use of tooltips in the map and scatter plot might make the data in these graphs less accessible through assitive technology. The use of a slider is also less accessible compared to other tools like a dropdown input that can work with screen readers. To improve accessibility for the visually impaired further, I could include a summary of the key information in the graph as text or use sonofication to represent the data.
+            </li> </br>
+                <li>
+                The use of tooltips in the map and scatter plot make the data in these graphs less accessible through assistive technology. A possible alternative is to label the points directly using text, but doing so might cause clutering and reduce the visual effectiveness of the visualizations, especially for the scatter plot that has many data points. The slider could be replaced with a dropdown input to make it work better with assitive technology, but the use of a slider is more visually effective and easier to use especially for people with low vision. The use of a map might reduce accessibility for those with low vision as some of the countries are clustered closely together, but it also has advantages in terms of conveying information, e.g. showing the geographic concentration of top soccer teams in Europe and South America.
+
+                </li>
+
+                </ol>
             </div>
     </div>
     <!--Feel free to add more JavaScript files as needed-->
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="yearly_games.js"></script>
     <script type="text/javascript" src="win_pct.js"></script>
+    <script type="text/javascript" src="world_cup.js"></script>
 </body>
 </html>

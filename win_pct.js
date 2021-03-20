@@ -2,9 +2,10 @@ run_q2();
 
 function run_q2(){
 
+    // Create svg for graph 2
     let svg = d3.select("#graph2")
         .append("svg")
-        .attr("width", graph_2_width)
+        .attr("width", graph_2_width - margin.left - margin.right)
         .attr("height", graph_2_height)
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
@@ -12,14 +13,13 @@ function run_q2(){
     // Map and projection
     var path = d3.geoPath();
     var projection = d3.geoMercator()
-      .scale(120)
-      .center([70,0])
+      .scale(110)
+      .center([105,0])
       .translate([graph_2_width / 2, graph_2_height / 2]);
 
     // Data and color scale
     colorRange = ["#f0e6c9"]
     var i;
-    // colors = d3.quantize(d3.interpolateHcl("#49BCE3", "#1077C3"), 6)
     colors = d3.quantize(d3.interpolateHcl("#56042C","#FEC310"), 10)
     for (i=0; i<colors.length;i++){
         colorRange.push(colors[i])
@@ -31,16 +31,16 @@ function run_q2(){
         .range(colorRange);
 
 
-
-    // Load external data and boot
+    // Load data
     promises = [];
     promises.push(d3.json("../data/world.geojson"));
-    promises.push(d3.csv("../data/football_q2.csv", function(d) { data.set(d.code, [d.rank,d.win_pct]); }));
+    promises.push(d3.csv("../data/football_q2.csv", function(d) { data.set(d.code, [parseInt(d.rank),parseFloat(d.win_pct)]); }));
 
     Promise.all(promises).then(ready);
 
     function ready(topo){
 
+        // Add tooltip
         var tooltip = d3.select("#graph2")
            .append("div")
            .style("opacity", 0)
@@ -51,6 +51,8 @@ function run_q2(){
            .style("border-radius", "5px")
            .style("padding", "5px")
 
+
+        // Define moveover function - map
         let mouseOver = function(d) {
         tooltip.style("opacity",1);
         d3.selectAll(".Country")
@@ -60,41 +62,43 @@ function run_q2(){
           .style("stroke", "black");
         }
 
+        // Define moveover function - tooltip
         let mouseMove = function(d){
             var name = d.properties.name;
             if (d.total == 0){
-                tooltip.html(name + " (unranked)")
-                    .style("left", (d3.mouse(this)[0]) + "px")
+                tooltip.html(name + "</br>Unranked")
+                    .style("left", (d3.mouse(this)[0]+100) + "px")
                     .style("top", (d3.mouse(this)[1]+50) + "px");
             }else{
-                var pct = parseFloat(d.total[1]*100).toFixed(1)+"%";
+                var pct = parseFloat(d.total[1]*100).toFixed(1);
                 var rank = d.total[0]
-                tooltip.html(name + " (No. " + rank + ", Winning %: " + pct +")")
-                    .style("left", (d3.mouse(this)[0]) + "px")
+                tooltip.html(name + "</br>No. " + rank + "</br>Winning %: " + pct)
+                    .style("left", (d3.mouse(this)[0]+100) + "px")
                     .style("top", (d3.mouse(this)[1]+50) + "px");
 
             }
 
         };
 
+        // Define mouseout function - map
         let mouseOut = function(d) {
         tooltip.style("opacity",0);
         d3.selectAll(".Country")
           .style("opacity", .8);
         d3.select(this)
-          .style("stroke", "transparent");
+          .style("stroke", "white");
         }
 
+        // Add map
         svg.append("g")
             .selectAll("path")
             .data(topo[0].features)
             .enter()
             .append("path")
-      // draw each country
+        // draw each country
                 .attr("d", d3.geoPath()
                     .projection(projection))
-
-      // set the color of each country
+        // set the color of each country
                 .attr("fill", function (d) {
                     d.total = data.get(d.id) || 0;
                     if (d.total == 0){
@@ -104,11 +108,11 @@ function run_q2(){
                     }
 
                 })
-                .style("stroke", "transparent")
+                .style("stroke", "white")
                 .attr("class", function(d){ return "Country" } )
                 .style("opacity", .8)
                 .on("mouseover", mouseOver )
-                .on("mouseleave", mouseOut )
+                .on("mouseout", mouseOut )
                 .on("mousemove", mouseMove );
 
 

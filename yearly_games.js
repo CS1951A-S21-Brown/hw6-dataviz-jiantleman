@@ -10,10 +10,10 @@ function run_q1(){
     // Create svg for graph 1
     let svg = d3.select("#graph1")
         .append("svg")
-        .attr("width", graph_1_width)
+        .attr("width", graph_1_width - margin.left - margin.right)
         .attr("height", graph_1_height)
         .append("g")
-        .attr("transform", `translate(${margin.left}, ${margin.top})`);
+        .attr("transform", `translate(0, ${margin.top})`);
 
     // Set up reference to count SVG group
     let countRef = svg.append("g");
@@ -38,8 +38,14 @@ function run_q1(){
     // Add y-axis label
     svg.append("text")
         .style("text-anchor", "middle")
-        .text("Number of Football Games")
-        .attr("transform", `translate(-20,${graph_1_height/2 - margin.top})rotate(-90)`);
+        .text("No. of Games")
+        .attr("transform", `translate(-20,${graph_1_height/2 - 60})rotate(-90)`);
+
+    // Add title
+    let title = svg.append("text")
+        .attr("transform", `translate(${graph_1_width/2 - margin.left},-20)`)
+        .style("text-anchor", "middle")
+        .style("font-size", 18);
 
     // Slider control
     var slider = new Slider('#yearSelect', {});
@@ -53,6 +59,8 @@ function run_q1(){
         d3.csv("../data/football_q1.csv").then(function(data){
 
             yearlyGames = cleanData_graph1(data, cur_start_year, cur_end_year);
+
+            title.text(`Number of International Football Games By Year (${cur_start_year} - ${cur_end_year})`);
 
             // y axis domain
             y.domain([d3.max(yearlyGames, function(d) {return d.count}),0]);
