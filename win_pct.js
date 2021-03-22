@@ -10,14 +10,14 @@ function run_q2(){
         .append("g")
         .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    // Map and projection
+    // Map
     var path = d3.geoPath();
     var projection = d3.geoMercator()
       .scale(110)
       .center([105,0])
       .translate([graph_2_width / 2, graph_2_height / 2]);
 
-    // Data and color scale
+    // Color scale
     colorRange = ["#f0e6c9"]
     var i;
     colors = d3.quantize(d3.interpolateHcl("#56042C","#FEC310"), 10)
@@ -95,10 +95,8 @@ function run_q2(){
             .data(topo[0].features)
             .enter()
             .append("path")
-        // draw each country
                 .attr("d", d3.geoPath()
                     .projection(projection))
-        // set the color of each country
                 .attr("fill", function (d) {
                     d.total = data.get(d.id) || 0;
                     if (d.total == 0){

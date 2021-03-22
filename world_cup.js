@@ -52,7 +52,7 @@
             .style("text-anchor", "middle")
             .text("Goal Difference");
 
-        // Define color scaleBand
+        // Define color scale
         var max = d3.max(data, function(d) {return d.score});
         var min = d3.min(data, function(d) {return d.score});
         let color = d3.scaleQuantize()
