@@ -56,7 +56,7 @@ function run_q1(){
     });
 
     function updateGraph (){
-        d3.csv("../data/football_q1.csv").then(function(data){
+        d3.csv("./data/football_q1.csv").then(function(data){
 
             yearlyGames = cleanData_graph1(data, cur_start_year, cur_end_year);
 

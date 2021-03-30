@@ -8,7 +8,7 @@
         .attr("transform", `translate(${margin.left/2}, ${margin.top})`);
 
 
-    d3.csv("data/football_q3.csv").then(function(data){
+    d3.csv("./data/football_q3.csv").then(function(data){
 
         // Clean data
         var i;

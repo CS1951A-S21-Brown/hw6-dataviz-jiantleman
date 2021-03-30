@@ -33,8 +33,8 @@ function run_q2(){
 
     // Load data
     promises = [];
-    promises.push(d3.json("../data/world.geojson"));
-    promises.push(d3.csv("../data/football_q2.csv", function(d) { data.set(d.code, [parseInt(d.rank),parseFloat(d.win_pct)]); }));
+    promises.push(d3.json("./data/world.geojson"));
+    promises.push(d3.csv("./data/football_q2.csv", function(d) { data.set(d.code, [parseInt(d.rank),parseFloat(d.win_pct)]); }));
 
     Promise.all(promises).then(ready);
 
